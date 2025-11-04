@@ -1,26 +1,44 @@
-using UnityEngine
+﻿using UnityEngine; /** brakuje średnika **/
+using System.Collections; /** brakuje **/
+using System.Collections.Generic; /** brakuje **/
 
 public class BuggyPlayerController : MonoBehaviour
 {
-    private float speed = 5f
-                            Rigidbody2D rb
-    Animator anim
+    public float moveSpeed = 5f; /** brakuje średnika, później w kodzie mamy moveSpeed, a nie speed **/
+    public Rigidbody2D rb; /** brakuje średnika i "private"**/
+    public Animator animator; /** brakuje średnika  i "private"**/
+
+    public float moveInput = 0; 
+    
+
+
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-            anim == GetComponent<Animator>()
     }
-}
+    /** zbędna klamra **/
     void Update()
     {
-        float moveInput = Input.GetAxis("Horizental")
-    
-            if (moveInputs > 0)
-                                transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
-        else if (moveInput < 0)
-            transform.Translate(Vector2.left * moveSpeed * Time.deltaTime);
+        moveInput = Input.GetAxis("Horizontal"); /** literówka w "Horizontal", brak średnika **/
+
+
+
+     if (moveInput > 0.1f)
         
-                     anim.SetBool("isMoving", moveInput != 0)
-    }
+     {
+                animator.SetBool("isMove", true);
+            }
+            else 
+            {
+                animator.SetBool("isMove", false);
+            }
+
+        }
+
+    void FixedUpdate()
+    {
+        
+        rb.velocity = new Vector2(moveInput* moveSpeed * Time.fixedDeltaTime, rb.velocity.y);
+}
 }
